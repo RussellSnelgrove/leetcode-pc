@@ -5,21 +5,16 @@ const assert = require('assert');
  * @return {number}
  */
 var jump = function (nums) {
-    let currentPosition = 0;
     let numberOfSteps = 0;
-    while (currentPosition < nums.length - 1) {
-        let maxSteps = nums[currentPosition];
-        let largestStep = 0;
-        if (maxSteps === 1) {
-            currentPosition++;
-            numberOfSteps++;
-            continue
+    let leftPointer = 0;
+    let rightPointer = 0;
+    while (rightPointer < nums.length - 1) {
+        let furtherReach = 0;
+        for (let i = leftPointer; i < rightPointer + 1; i++) {
+            furtherReach = Math.max(furtherReach, i + nums[i])
         }
-        for (let i = currentPosition + 1; i < currentPosition + maxSteps; i++) {
-            console.log('currentPosition', currentPosition, 'index', i, 'indexValue', nums[i]);
-            largestStep = Math.max(largestStep, nums[i]);
-        }
-        currentPosition += largestStep;
+        leftPointer = rightPointer + 1;
+        rightPointer = furtherReach;
         numberOfSteps++;
     }
     return numberOfSteps
